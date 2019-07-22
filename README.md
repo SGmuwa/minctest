@@ -26,21 +26,21 @@ There is a [Node.js port here](https://github.com/codeplea/minctest-node) and a 
     #include "minctest.h"
 
     void test1() {
-        lok('a' == 'a');
+    	minctest_ok('a' == 'a');
     }
 
     void test2() {
-        lequal(5, 5);
-        lfequal(5.5, 5.5);
-        lsequal("abc", "abc");
+        minctest_equal(5, 5);
+        minctest_fequal(5.5, 5.5, 0.00001);
+        minctest_sequal("abc", "abc");
     }
 
     int main(int argc, char *argv[])
     {
-        lrun("test1", test1);
-        lrun("test2", test2);
-        lresults();
-        return lfails != 0;
+        minctest_run("test1", test1);
+        minctest_run("test2", test2);
+        minctest_results();
+        return minctest_fails != 0;
     }
 
 
@@ -53,7 +53,7 @@ That produces the following output:
 
 
 ## Hints
-     All functions/variables start with the letter 'l'.
+     All functions/variables start with the "minctest_".
 
 ## Users
 
