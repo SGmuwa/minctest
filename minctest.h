@@ -1,6 +1,6 @@
 /*
  *
- * MINCTEST - Minimal C Test Library - 0.3.0-SGmuwa
+ * MINCTEST - Minimal C Test Library - 0.3.1-SGmuwa
  *
  * Copyright (c) 2014-2017 Lewis Van Winkle
  *
@@ -72,8 +72,8 @@
 
 /* Track the number of passes, fails. */
 /* NB this is made for all tests to be in one file. */
-static int minctest_tests = 0;
-static int minctest_fails = 0;
+static size_t minctest_tests = 0;
+static size_t minctest_fails = 0;
 
 /* Reset number of passes, fails. */
 #define minctest_reset() minctest_tests = 0; minctest_fails = 0
@@ -81,23 +81,23 @@ static int minctest_fails = 0;
 /* Display the test results. */
 #define minctest_results() do {\
     if (minctest_fails == 0) {\
-        printf("ALL TESTS PASSED (%d/%d)\n", minctest_tests, minctest_tests);\
+        printf("ALL TESTS PASSED (%zu/%zu)\n", minctest_tests, minctest_tests);\
     } else {\
-        printf("SOME TESTS FAILED (%d/%d)\n", minctest_tests-minctest_fails, minctest_tests);\
+        printf("SOME TESTS FAILED (%zu/%zu)\n", minctest_tests-minctest_fails, minctest_tests);\
     }\
 } while (0)
 
 
 /* Run a test. Name can be any string to print out, test is the function name to call. */
 #define minctest_run(name, test) do {\
-    const int ts = minctest_tests;\
-    const int fs = minctest_fails;\
+    const size_t ts = minctest_tests;\
+    const size_t fs = minctest_fails;\
     const clock_t start = clock();\
-    printf("\t%-14s", name);\
+    printf("\t%s:\n", name);\
     test();\
-    printf("pass:%2d   fail:%2d   %4dms\n",\
+    printf("\t -- pass: %-20zu fail: %-20zu time: %ldms\n",\
             (minctest_tests-ts)-(minctest_fails-fs), minctest_fails-fs,\
-            (int)((clock() - start) * 1000 / CLOCKS_PER_SEC));\
+            (long)((clock() - start) * 1000 / CLOCKS_PER_SEC));\
 } while (0)
 
 
