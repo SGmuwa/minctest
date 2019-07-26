@@ -124,7 +124,7 @@ static size_t minctest_fails = 0;
     minctest_equal_base((a) == (b), (long long int)a, (long long int)b, "%lld")
 
 
-/* Assert two floats are equal.
+/* Assert two long double are equal.
 r: How far apart can floats be before we consider them unequal. */
 #define minctest_fequal(a, b, r)\
     minctest_equal_base(fabsl((long double)(a)-(long double)(b)) <= (long double)r\
