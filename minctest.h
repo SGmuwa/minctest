@@ -1,6 +1,6 @@
 /*
  *
- * MINCTEST - Minimal C Test Library - 0.3.1-SGmuwa
+ * MINCTEST - Minimal C Test Library - 0.3.2-SGmuwa
  *
  * Copyright (c) 2014-2017 Lewis Van Winkle
  *
@@ -67,6 +67,10 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+
+
+/* Version of minctest. */
+#define MINCTEST_VERSION "0.3.2-SGmuwa"
 
 
 
