@@ -1,7 +1,7 @@
 # Minctest
 
 
-Minctest is a very minimal unit-testing "framework" written in ANSI C and
+Minctest is a very minimal unit-testing "framework" written in C and
 implemented in a single header file. It's handy when you want some real simple
 unit tests for a small project.
 
@@ -13,7 +13,7 @@ There is a [Node.js port here](https://github.com/codeplea/minctest-node) and a 
 
 ## Features
 
-- **ANSI C with no dependencies**.
+- No dependencies.
 - Single header file.
 - Reports file and line number for failed assertions.
 - Reports run time for each test.
