@@ -127,8 +127,8 @@ static size_t minctest_fails = 0;
 /* Assert two floats are equal.
 r: How far apart can floats be before we consider them unequal. */
 #define minctest_fequal(a, b, r)\
-    minctest_equal_base(fabsl((double)(a)-(double)(b)) <= (double)r\
-     && fabsl((double)(a)-(double)(b)) == fabsl((double)(a)-(double)(b)), (double)(a), (double)(b), "%f")
+    minctest_equal_base(fabsl((long double)(a)-(long double)(b)) <= (long double)r\
+     && fabsl((long double)(a)-(long double)(b)) == fabsl((long double)(a)-(long double)(b)), (long double)(a), (long double)(b), "%Lf")
 
 
 /* Assert two strings are equal. */
