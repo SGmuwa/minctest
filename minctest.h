@@ -140,4 +140,34 @@ r: How far apart can long doubles be before we consider them unequal. */
     minctest_equal_base(strcmp(a, b) == 0, a, b, "%s")
 
 
+/* Print memory block "mem" of "size" bytes as hex numbers. */
+#define minctest_printmemory(mem, size) do{\
+    for(size_t i = 0; i < size; i++)\
+    {\
+        printf("%04X%*c", (int)((char *)mem + i), i + 1 < size, ' '); \
+    }\
+} while(0)
+
+
+/* Assert two bloks of memory. N - number of bytes.*/
+#define minctest_mequal(a, b, n) do {\
+    ++minctest_tests;\
+    if(a == NULL){\
+        ++minctest_fails;\
+        printf("%s:%d a == NULL");\
+    }\
+    else if(a == NULL){\
+        ++minctest_fails;\
+        printf("%s:%d b == NULL");\
+    }\
+    else if (!(memcmp(a, b, n))) {\
+        ++minctest_fails;\
+        printf("%s:%d (<", __FILE__, __LINE__);\
+        minctest_printmemory(a, n);\
+        printf("> != <");\
+        minctest_printmemory(b, n);\
+        printf(">)\n");\
+    }} while (0)
+
+
 #endif /*__MINCTEST_H__*/
