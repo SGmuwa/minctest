@@ -156,7 +156,7 @@ r: How far apart can long doubles be before we consider them unequal. */
         ++minctest_fails;\
         printf("%s:%d a == NULL");\
     }\
-    else if(a == NULL){\
+    else if(b == NULL){\
         ++minctest_fails;\
         printf("%s:%d b == NULL");\
     }\
