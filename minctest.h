@@ -128,8 +128,8 @@ static size_t minctest_fails = 0;
     minctest_equal_base((a) == (b), (long long int)a, (long long int)b, "%lld")
 
 
-/* Assert two long doubles are equal.
-r: How far apart can long doubles be before we consider them unequal. */
+/* Assert two long doubles are equal. */
+/* r: How far apart can long doubles be before we consider them unequal. */
 #define minctest_fequal(a, b, r)\
     minctest_equal_base(fabsl((long double)(a)-(long double)(b)) <= (long double)r\
      && fabsl((long double)(a)-(long double)(b)) == fabsl((long double)(a)-(long double)(b)), (long double)(a), (long double)(b), "%Lf")
@@ -141,16 +141,19 @@ r: How far apart can long doubles be before we consider them unequal. */
 
 
 /* Print memory block "mem" of "size" bytes as hex numbers. */
-#define minctest_printmemory(mem, size) do{\
-    for(size_t i = 0; i < size; i++)\
-    {\
-        printf("%04X%*c", (int)((char *)mem + i), i + 1 < size, ' '); \
-    }\
-} while(0)
+void minctest_printmemory(void * mem, size_t size)
+{
+    for (size_t i = 0; i < size; i++)
+    {
+        printf("%04X%*c", *((char *)mem + i), i + 1 < size, ' ');
+    }
+}
 
 
-/* Assert two bloks of memory. N - number of bytes.*/
-#define minctest_mequal(a, b, n) do {\
+/* Prototype to assert equal for memory blocks. */
+/* Assert two bloks of memory. "n" - number of bytes. */
+/* void printer(void * point, size_t count) - function of print memory. */
+#define minctest_mequal_base(a, b, n, printer) do {\
     ++minctest_tests;\
     if(a == NULL){\
         ++minctest_fails;\
@@ -163,11 +166,16 @@ r: How far apart can long doubles be before we consider them unequal. */
     else if (!(memcmp(a, b, n))) {\
         ++minctest_fails;\
         printf("%s:%d (<", __FILE__, __LINE__);\
-        minctest_printmemory(a, n);\
+        printer(a, n);\
         printf("> != <");\
-        minctest_printmemory(b, n);\
+        printer(b, n);\
         printf(">)\n");\
     }} while (0)
+
+
+/* Assert two bloks of memory. "n" - number of bytes.*/
+#define minctest_mequal(a, b, n)\
+    minctest_mequal_base(a, b, n, minctest_printmemory)
 
 
 #endif /*__MINCTEST_H__*/
