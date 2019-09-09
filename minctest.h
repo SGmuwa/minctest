@@ -1,6 +1,6 @@
 /*
  *
- * MINCTEST - Minimal C Test Library - 0.4.0-SGmuwa
+ * MINCTEST - Minimal C Test Library - 0.4.1-SGmuwa
  *
  * Copyright (c) 2014-2017 Lewis Van Winkle
  *
@@ -70,7 +70,7 @@
 
 
 /* Version of minctest. */
-#define MINCTEST_VERSION "0.3.2-SGmuwa"
+#define MINCTEST_VERSION "0.4.1-SGmuwa"
 
 
 
@@ -110,34 +110,34 @@ static size_t minctest_fails = 0;
     ++minctest_tests;\
     if (!(test)) {\
         ++minctest_fails;\
-        printf("%s:%d error \n", __FILE__, __LINE__);\
+        printf("error at %s:%d\n", __FILE__, __LINE__);\
     }} while (0)
 
 
 /* Prototype to assert equal. */
-#define minctest_equal_base(equality, a, b, format) do {\
+#define minctest_equal_base(equality, expect, actual, format) do {\
     ++minctest_tests;\
     if (!(equality)) {\
         ++minctest_fails;\
-        printf("%s:%d (<"format"> != <"format">)\n", __FILE__, __LINE__, (a), (b));\
+        printf("expect: <"format">, actual: <"format"> at %s:%d\n", (expect), (actual), __FILE__, __LINE__);\
     }} while (0)
 
 
 /* Assert two integers are equal. */
-#define minctest_equal(a, b)\
-    minctest_equal_base((a) == (b), (long long int)a, (long long int)b, "%lld")
+#define minctest_equal(expect, actual)\
+    minctest_equal_base((expect) == (actual), (long long int)expect, (long long int)actual, "%lld")
 
 
 /* Assert two long doubles are equal. */
 /* r: How far apart can long doubles be before we consider them unequal. */
-#define minctest_fequal(a, b, r)\
-    minctest_equal_base(fabsl((long double)(a)-(long double)(b)) <= (long double)r\
-     && fabsl((long double)(a)-(long double)(b)) == fabsl((long double)(a)-(long double)(b)), (long double)(a), (long double)(b), "%Lf")
+#define minctest_fequal(expect, actual, r)\
+    minctest_equal_base(fabsl((long double)(expect)-(long double)(actual)) <= (long double)r\
+     && fabsl((long double)(expect)-(long double)(actual)) == fabsl((long double)(expect)-(long double)(actual)), (long double)(expect), (long double)(actual), "%Lf")
 
 
 /* Assert two strings are equal. */
-#define minctest_sequal(a, b)\
-    minctest_equal_base(strcmp(a, b) == 0, a, b, "%s")
+#define minctest_sequal(expect, actual)\
+    minctest_equal_base(strcmp(expect, actual) == 0, expect, actual, "%s")
 
 
 /* Print memory block "mem" of "size" bytes as hex numbers. */
@@ -153,29 +153,29 @@ void minctest_printmemory(void * mem, size_t size)
 /* Prototype to assert equal for memory blocks. */
 /* Assert two bloks of memory. "n" - number of bytes. */
 /* void printer(void * point, size_t count) - function of print memory. */
-#define minctest_mequal_base(a, b, n, printer) do {\
+#define minctest_mequal_base(expect, actual, n, printer) do {\
     ++minctest_tests;\
-    if(a == NULL){\
+    if(expect == NULL){\
         ++minctest_fails;\
-        printf("%s:%d a == NULL");\
+        printf("%s:%d expect == NULL at %s:%d", __FILE__, __LINE__);\
     }\
-    else if(b == NULL){\
+    else if(actual == NULL){\
         ++minctest_fails;\
-        printf("%s:%d b == NULL");\
+        printf("%s:%d actual == NULL at %s:%d", __FILE__, __LINE__);\
     }\
-    else if (!(memcmp(a, b, n))) {\
+    else if (!(memcmp(expect, actual, n))) {\
         ++minctest_fails;\
-        printf("%s:%d (<", __FILE__, __LINE__);\
-        printer(a, n);\
-        printf("> != <");\
-        printer(b, n);\
-        printf(">)\n");\
+        printf("expect: <");\
+        printer(expect, n);\
+        printf(">, actual: <");\
+        printer(actual, n);\
+        printf("> at %s:%d \n", __FILE__, __LINE__);\
     }} while (0)
 
 
 /* Assert two bloks of memory. "n" - number of bytes.*/
-#define minctest_mequal(a, b, n)\
-    minctest_mequal_base(a, b, n, minctest_printmemory)
+#define minctest_mequal(expect, actual, n)\
+    minctest_mequal_base(expect, actual, n, minctest_printmemory)
 
 
 #endif /*__MINCTEST_H__*/
